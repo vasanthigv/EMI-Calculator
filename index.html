@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>EMI calculator,Calculate your loan EMI and Total Amount to be paid</title>
+	<!-- <script src="js/jquery.js"></script> -->
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link href='https://fonts.googleapis.com/css?family=Catamaran' rel='stylesheet'>
+</head>
+<body >
+	<div>
+	<h1> EMI CALCULATOR</h1>
+	<h2> Calculate your loan EMI and Total Amount to be paid</h2>
+	<form name="myform" style="margin-top: 20px;">
+		
+		<div><label class="yellowfont">Loan amount:</label></div><div> <input name="prn" type="text" class="textbox"></div>
+		<div><label class="yellowfont">Interest Rate:(%)</label></div><div><input name="intr" type="text" class="textbox"></div>
+		<div><label class="yellowfont">Loan Tenure:</label></div><div><input name="t" type="text" class="textbox textbox-small">
+		<select name="time">
+			<option value="years" name="yrs">Years</option>
+			<option value="months" name="mnths">Months</option>
+		</select>
+		</div>
+		<input type="button" name="submit" class="button" value="Calculate" onclick="emicalc()">
+	</form>
+
+	<p>EMI is:  <span id="emi">00</span></p>
+	<p>Total Interest to be paid is:  <span id="iyear">00</span></p>
+	<p>Total Amount to be paid is:  <span id="total">00</span></p>
+
+	</div>
+	<script type="text/javascript">
+		function emicalc()
+		{
+			var P=document.myform.prn.value;
+			var intr=document.myform.intr.value;
+			var t=document.myform.t.value;
+			if((isNaN(P) || !P) || (isNaN(intr) || !intr) || (isNaN(t) || !t) ){
+						alert("Please enter numerical values");
+			}
+			else{
+			var ROI= intr/1200;
+			//console.log(ROI);
+			var n;
+			var time=document.myform.time.value;
+			console.log(time);
+			if(time=="years")
+			{
+				n=t*12;
+			}
+			else{
+				n=t;
+			}
+			//var n= t*12;
+			var dummy=Math.pow(1+ROI,n);
+			//console.log(dummy)
+			var month= (P*ROI*dummy/(dummy-1));
+			var amount= month * n;
+			var tinterest= amount-P;
+			document.getElementById("emi").innerHTML=Math.round(month);
+			document.getElementById("iyear").innerHTML=Math.round(tinterest);
+			document.getElementById("total").innerHTML=Math.round(amount);
+		}
+	}
+	</script>
+
+</body>
+</html>
